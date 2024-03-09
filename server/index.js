@@ -52,6 +52,7 @@ const {
   
   app.post('/api/vacations', async(req, res, next)=> {
     try {
+      console.log(req.body)
       res.status(201).send(await createVacation(req.body.place_name, req.body.user_name, req.body.departure_date));
     }
     catch(ex){

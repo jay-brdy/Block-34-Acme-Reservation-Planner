@@ -42,16 +42,16 @@ const createPlace = async (name) => {
     return response.rows[0];
 };
 
-const createVacation = async ({ place_name, user_name, departure_date }) => {
+const createVacation = async ( place_name, user_name, departure_date ) => {
     console.log(user_name);
     console.log(place_name);
     console.log(departure_date);
     const SQL = `
-      INSERT INTO vacations(id, place_id, user_id, departure_date) VALUES($1, (SELECT id FROM places WHERE name=$2), (SELECT id FROM users WHERE name=$3), $4) RETURNING *
+        INSERT INTO vacations(id, place_id, user_id, departure_date) VALUES($1, (SELECT id FROM places WHERE name=$2), (SELECT id FROM users WHERE name=$3), $4) RETURNING *
     `;
     const response = await client.query(SQL, [uuid.v4(), place_name, user_name, departure_date]);
     return response.rows[0];
-};
+  };
 
 const fetchUsers = async () => {
     const SQL = `
