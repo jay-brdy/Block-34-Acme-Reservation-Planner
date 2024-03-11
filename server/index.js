@@ -1,48 +1,48 @@
 const {
   client,
   createTables,
-  createUser,
-  createPlace,
-  fetchUsers,
-  fetchPlaces,
-  createVacation,
-  fetchVacations,
-  destroyVacation
+  createCustomer,
+  createRestaurant,
+  fetchCustomers,
+  fetchRestaurants,
+  createReservation,
+  fetchReservations,
+  destroyReservation
 } = require('./db');
 const express = require('express');
 const app = express();
 app.use(express.json());
 
-app.get('/api/users', async(req, res, next)=> {
+app.get('/api/customers', async(req, res, next)=> {
   try {
-    res.send(await fetchUsers());
+    res.send(await fetchCustomers());
   }
   catch(ex){
     next(ex);
   }
 });
 
-app.get('/api/places', async(req, res, next)=> {
+app.get('/api/restaurants', async(req, res, next)=> {
   try {
-    res.send(await fetchPlaces());
+    res.send(await fetchRestaurants());
   }
   catch(ex){
     next(ex);
   }
 });
 
-app.get('/api/vacations', async(req, res, next)=> {
+app.get('/api/reservations', async(req, res, next)=> {
   try {
-    res.send(await fetchVacations());
+    res.send(await fetchReservations());
   }
   catch(ex){
     next(ex);
   }
 });
 
-app.delete('/api/vacations/:id', async(req, res, next)=> {
+app.delete('/api/reservations/:id', async(req, res, next)=> {
   try {
-    await destroyVacation(req.params.id);
+    await destroyReservation(req.params.id);
     res.sendStatus(204);
   }
   catch(ex){
@@ -50,9 +50,9 @@ app.delete('/api/vacations/:id', async(req, res, next)=> {
   }
 });
 
-app.post('/api/vacations', async(req, res, next)=> {
+app.post('/api/revations', async(req, res, next)=> {
   try {
-    res.status(201).send(await createVacation(req.body));
+    res.status(201).send(await createReservation(req.body));
   }
   catch(ex){
     next(ex);
@@ -65,28 +65,28 @@ const init = async()=> {
   await createTables();
   console.log('tables created');
   const [moe, lucy, ethyl, rome, nyc, la, paris] = await Promise.all([
-    createUser('moe'),
-    createUser('lucy'),
-    createUser('ethyl'),
-    createPlace('rome'),
-    createPlace('nyc'),
-    createPlace('la'),
-    createPlace('paris')
+    createCustomer('moe'),
+    createCustomer('lucy'),
+    createCustomer('ethyl'),
+    createRestaurant('rome'),
+    createRestaurant('nyc'),
+    createRestaurant('la'),
+    createRestaurant('paris')
   ]);
   console.log(`moe has an id of ${moe.id}`);
   console.log(`rome has an id of ${rome.id}`);
-  console.log(await fetchUsers());
+  console.log(await fetchCustomers());
   console.log(await fetchPlaces());
   await Promise.all([
-    createVacation({ user_id: moe.id, place_id: nyc.id, departure_date: '04/01/2024'}),
-    createVacation({ user_id: moe.id, place_id: nyc.id, departure_date: '04/15/2024'}),
-    createVacation({ user_id: lucy.id, place_id: la.id, departure_date: '07/04/2024'}),
-    createVacation({ user_id: lucy.id, place_id: rome.id, departure_date: '10/31/2024'}),
+    createReservation({ customer_id: moe.id, restaurant_id: nyc.id, reservation_date: '04/01/2024'}),
+    createReservation({ customer_id: moe.id, restaurant_id: nyc.id, reservation_date: '04/15/2024'}),
+    createReservation({ customer_id: lucy.id, restaurant_id: la.id, reservation_date: '07/04/2024'}),
+    createReservation({ customer_id: lucy.id, restaurant_id: rome.id, reservation_date: '10/31/2024'}),
   ]);
-  const vacations = await fetchVacations();
-  console.log(vacations);
-  await destroyVacation(vacations[0].id);
-  console.log(await fetchVacations());
+  const reservations = await fetchReservations();
+  console.log(reservations);
+  await destroyReservation(reservations[0].id);
+  console.log(await fetchReservations());
   
   const port = process.env.PORT || 3000;
   app.listen(port, ()=> console.log(`listening on port ${port}`));

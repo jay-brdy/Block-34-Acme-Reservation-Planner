@@ -51,7 +51,7 @@ const createReservation = async ({ restaurant_id, customer_id, reservation_date 
   return response.rows[0];
 };
 
-const fetchcustomer = async () => {
+const fetchCustomers = async () => {
   const SQL = `
     SELECT *
     FROM customer
@@ -60,7 +60,7 @@ const fetchcustomer = async () => {
   return response.rows;
 };
 
-const fetchrestaurants = async () => {
+const fetchRestaurants = async () => {
   const SQL = `
     SELECT *
     FROM restaurants
@@ -69,7 +69,7 @@ const fetchrestaurants = async () => {
   return response.rows;
 };
 
-const fetchreservations = async () => {
+const fetchReservations = async () => {
   const SQL = `
     SELECT *
     FROM reservations
@@ -91,12 +91,9 @@ module.exports = {
   createTables,
   createCustomer,
   createRestaurant,
-  fetchcustomer,
-  fetchrestaurants,
+  fetchCustomers,
+  fetchRestaurants,
   createReservation,
-  fetchreservations,
+  fetchReservations,
   destroyReservation
 };
-
-// testing 
-//testing again
