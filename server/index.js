@@ -64,24 +64,24 @@ const init = async()=> {
   console.log('connected to database');
   await createTables();
   console.log('tables created');
-  const [moe, lucy, ethyl, rome, nyc, la, paris] = await Promise.all([
+  const [moe, lucy, ethyl, popeyes, kfc, chickfila, canes] = await Promise.all([
     createCustomer('moe'),
     createCustomer('lucy'),
     createCustomer('ethyl'),
-    createRestaurant('rome'),
-    createRestaurant('nyc'),
-    createRestaurant('la'),
-    createRestaurant('paris')
+    createRestaurant('popeyes'),
+    createRestaurant('kfc'),
+    createRestaurant('chickfila'),
+    createRestaurant('canes')
   ]);
   console.log(`moe has an id of ${moe.id}`);
-  console.log(`rome has an id of ${rome.id}`);
+  console.log(`popeyes has an id of ${popeyes.id}`);
   console.log(await fetchCustomers());
-  console.log(await fetchPlaces());
+  console.log(await fetchRestaurants());
   await Promise.all([
-    createReservation({ customer_id: moe.id, restaurant_id: nyc.id, reservation_date: '04/01/2024'}),
-    createReservation({ customer_id: moe.id, restaurant_id: nyc.id, reservation_date: '04/15/2024'}),
-    createReservation({ customer_id: lucy.id, restaurant_id: la.id, reservation_date: '07/04/2024'}),
-    createReservation({ customer_id: lucy.id, restaurant_id: rome.id, reservation_date: '10/31/2024'}),
+    createReservation({ customer_id: moe.id, restaurant_id: kfc.id, reservation_date: '04/01/2024', party_count: 1 }),
+    createReservation({ customer_id: moe.id, restaurant_id: kfc.id, reservation_date: '04/15/2024', party_count: 2 }),
+    createReservation({ customer_id: lucy.id, restaurant_id: chickfila.id, reservation_date: '07/04/2024', party_count: 3 }),
+    createReservation({ customer_id: lucy.id, restaurant_id: popeyes.id, reservation_date: '10/31/2024', party_count: 4 }),
   ]);
   const reservations = await fetchReservations();
   console.log(reservations);

@@ -8,7 +8,7 @@ const createTables = async () => {
     DROP TABLE IF EXISTS reservations;
     DROP TABLE IF EXISTS restaurants;
 
-    CREATE TABLE customer(
+    CREATE TABLE customers(
       id UUID PRIMARY KEY,
       name VARCHAR(100)
     );
