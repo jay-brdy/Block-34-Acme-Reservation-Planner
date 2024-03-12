@@ -4,8 +4,8 @@ const uuid = require('uuid');
 
 const createTables = async () => {
   const SQL = `
-    DROP TABLE IF EXISTS customers;
     DROP TABLE IF EXISTS reservations;
+    DROP TABLE IF EXISTS customers;
     DROP TABLE IF EXISTS restaurants;
 
     CREATE TABLE customers(
