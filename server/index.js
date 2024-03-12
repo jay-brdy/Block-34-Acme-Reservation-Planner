@@ -40,7 +40,7 @@ app.get('/api/reservations', async(req, res, next)=> {
   }
 });
 
-app.delete('/api/reservations/:id', async(req, res, next)=> {
+app.delete('/api/customers/:customer_id/reservations/:id', async(req, res, next)=> {
   try {
     await destroyReservation(req.params.id);
     res.sendStatus(204);
@@ -50,7 +50,7 @@ app.delete('/api/reservations/:id', async(req, res, next)=> {
   }
 });
 
-app.post('/api/revations', async(req, res, next)=> {
+app.post('/api/customers/:id/reservations', async(req, res, next)=> {
   try {
     res.status(201).send(await createReservation(req.body));
   }
